@@ -17,10 +17,22 @@ class Gesture(db.Model):
     practice_results = db.relationship('PracticeResult', backref='gesture', lazy=True, cascade='all, delete-orphan')
     
     def to_dict(self):
-        # Ensure image URL always starts with / so it works on any host/port
-        image_url = self.image or ''
-        if image_url and not image_url.startswith('/') and not image_url.startswith('http'):
-            image_url = '/' + image_url
+        # Extract letter from gesture name (e.g., "Huruf A" -> "a")
+        import re
+        # Match pattern "Huruf X" where X is the letter we want
+        name_match = re.search(r'Huruf\s+([A-Z])', self.name)
+        letter = name_match.group(1).lower() if name_match else None
+        
+        # Use API endpoint to serve images
+        image_url = ''
+        if letter:
+            image_url = f'/api/images/{letter}'
+        elif self.image:
+            # Fallback to stored image path
+            image_url = self.image
+            if image_url and not image_url.startswith('/'):
+                image_url = '/' + image_url
+        
         return {
             'id': self.id,
             'name': self.name,

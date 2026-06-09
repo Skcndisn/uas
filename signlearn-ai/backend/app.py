@@ -26,15 +26,21 @@ def create_app(config_class=DevelopmentConfig):
         if Gesture.query.count() == 0:
             init_sample_gestures()
         else:
-            # Fix any existing records that are missing the leading slash
+            # Fix any existing records with old image paths
             fixed = 0
             for gesture in Gesture.query.all():
-                if gesture.image and not gesture.image.startswith('/') and not gesture.image.startswith('http'):
-                    gesture.image = '/' + gesture.image
-                    fixed += 1
+                import re
+                # Match pattern "Huruf X" where X is the letter we want
+                name_match = re.search(r'Huruf\s+([A-Z])', gesture.name)
+                letter = name_match.group(1).lower() if name_match else None
+                if letter:
+                    new_path = f'/api/images/{letter}'
+                    if gesture.image != new_path:
+                        gesture.image = new_path
+                        fixed += 1
             if fixed:
                 db.session.commit()
-                print(f"✓ Fixed {fixed} gesture image paths (added leading /)")
+                print(f"✓ Fixed {fixed} gesture image paths to use correct API endpoints")
     
     # Register blueprints
     from routes.gestures import gestures_bp
@@ -72,15 +78,31 @@ def create_app(config_class=DevelopmentConfig):
     # Serve gesture images from the BISINDO dataset
     DATASET_DIR = os.path.join(os.path.dirname(__file__), 'database', 'Citra BISINDO')
 
-    @app.route('/<letter>.jpg')
+    @app.route('/api/images/<letter>')
     def serve_gesture_image(letter):
+        """Serve gesture images from BISINDO database"""
+        from flask import abort
         letter_upper = letter.upper()
         letter_dir = os.path.join(DATASET_DIR, letter_upper)
         if os.path.isdir(letter_dir):
-            for fname in sorted(os.listdir(letter_dir)):
-                if fname.lower().endswith('.jpg'):
-                    return send_from_directory(letter_dir, fname)
+            # Get all jpg files and return the first one
+            files = [f for f in sorted(os.listdir(letter_dir)) if f.lower().endswith(('.jpg', '.jpeg', '.png'))]
+            if files:
+                return send_from_directory(letter_dir, files[0])
+        abort(404)
+
+    # Legacy route for direct letter.jpg access
+    @app.route('/<letter>.jpg')
+    def serve_gesture_image_legacy(letter):
+        """Legacy endpoint - redirect to new API"""
         from flask import abort
+        letter_upper = letter.upper()
+        letter_dir = os.path.join(DATASET_DIR, letter_upper)
+        if os.path.isdir(letter_dir):
+            # Get all jpg files and return the first one
+            files = [f for f in sorted(os.listdir(letter_dir)) if f.lower().endswith(('.jpg', '.jpeg', '.png'))]
+            if files:
+                return send_from_directory(letter_dir, files[0])
         abort(404)
 
     # Serve frontend static files
@@ -103,7 +125,7 @@ def init_sample_gestures():
     for letter in alphabet:
         gesture = Gesture(
             name=f'Huruf {letter}',
-            image=f'/{letter.lower()}.jpg',
+            image=f'/api/images/{letter.lower()}',
             description=f'Gerakan tangan untuk menyatakan huruf {letter} dalam Bahasa Isyarat Indonesia (BISINDO)'
         )
         sample_gestures.append(gesture)
