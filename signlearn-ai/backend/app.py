@@ -25,6 +25,16 @@ def create_app(config_class=DevelopmentConfig):
         from database.models import Gesture
         if Gesture.query.count() == 0:
             init_sample_gestures()
+        else:
+            # Fix any existing records that are missing the leading slash
+            fixed = 0
+            for gesture in Gesture.query.all():
+                if gesture.image and not gesture.image.startswith('/') and not gesture.image.startswith('http'):
+                    gesture.image = '/' + gesture.image
+                    fixed += 1
+            if fixed:
+                db.session.commit()
+                print(f"✓ Fixed {fixed} gesture image paths (added leading /)")
     
     # Register blueprints
     from routes.gestures import gestures_bp
@@ -93,7 +103,7 @@ def init_sample_gestures():
     for letter in alphabet:
         gesture = Gesture(
             name=f'Huruf {letter}',
-            image=f'{letter.lower()}.jpg',
+            image=f'/{letter.lower()}.jpg',
             description=f'Gerakan tangan untuk menyatakan huruf {letter} dalam Bahasa Isyarat Indonesia (BISINDO)'
         )
         sample_gestures.append(gesture)

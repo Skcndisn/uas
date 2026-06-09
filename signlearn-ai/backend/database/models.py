@@ -17,10 +17,14 @@ class Gesture(db.Model):
     practice_results = db.relationship('PracticeResult', backref='gesture', lazy=True, cascade='all, delete-orphan')
     
     def to_dict(self):
+        # Ensure image URL always starts with / so it works on any host/port
+        image_url = self.image or ''
+        if image_url and not image_url.startswith('/') and not image_url.startswith('http'):
+            image_url = '/' + image_url
         return {
             'id': self.id,
             'name': self.name,
-            'image': self.image,
+            'image': image_url,
             'description': self.description,
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat()
