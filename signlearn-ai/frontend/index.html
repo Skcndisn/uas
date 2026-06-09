@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SignLearn AI - BISINDO Learning Platform</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <h1>🤟 SignLearn AI</h1>
+          <p>Belajar Bahasa Isyarat Indonesia dengan AI</p>
+        </div>
+        <ul class="navbar-menu">
+          <li><a href="index.html" class="active">Dashboard</a></li>
+          <li><a href="learn.html">Pelajari</a></li>
+          <li><a href="practice.html">Latihan</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <section class="dashboard">
+        <div class="welcome">
+          <h2>Selamat Datang di SignLearn AI!</h2>
+          <p>
+            Platform pembelajaran Bahasa Isyarat Indonesia (BISINDO) menggunakan
+            teknologi AI.
+          </p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Total Praktik</h3>
+            <p class="stat-value" id="totalPractice">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Akurasi Rata-rata</h3>
+            <p class="stat-value" id="avgAccuracy">0%</p>
+          </div>
+          <div class="stat-card">
+            <h3>Gerakan Benar</h3>
+            <p class="stat-value" id="correctCount">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Total Gerakan</h3>
+            <p class="stat-value" id="totalGestures">0</p>
+          </div>
+        </div>
+
+        <div class="features">
+          <h2>Fitur Utama</h2>
+          <div class="feature-grid">
+            <div class="feature-card">
+              <div class="feature-icon">📚</div>
+              <h3>Pelajari Gerakan</h3>
+              <p>
+                Pelajari gerakan-gerakan BISINDO dari kumpulan lengkap dengan
+                penjelasan detail.
+              </p>
+              <a href="learn.html" class="btn btn-primary">Mulai Belajar</a>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🎯</div>
+              <h3>Latihan Gerakan</h3>
+              <p>
+                Latih kemampuan Anda dengan AI yang akan mengevaluasi akurasi
+                gerakan Anda.
+              </p>
+              <a href="practice.html" class="btn btn-primary">Mulai Latihan</a>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">📊</div>
+              <h3>Pantau Progres</h3>
+              <p>
+                Lihat statistik dan kemajuan pembelajaran Anda secara real-time.
+              </p>
+              <a href="#stats" class="btn btn-primary">Lihat Statistik</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-section" id="stats">
+          <h2>Statistik Pembelajaran Anda</h2>
+          <div class="progress-container">
+            <div class="progress-item">
+              <label>Gerakan yang Dikuasai</label>
+              <div class="progress-bar">
+                <div
+                  class="progress-fill"
+                  id="progressFill"
+                  style="width: 0%"
+                ></div>
+              </div>
+              <p>
+                <span id="masteredCount">0</span> dari
+                <span id="totalGesturesCount">0</span>
+              </p>
+            </div>
+          </div>
+          <div id="gestureStats"></div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <p>
+        &copy; 2024 SignLearn AI - Platform Pembelajaran BISINDO. Semua hak
+        dilindungi.
+      </p>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>

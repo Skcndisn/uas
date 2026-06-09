@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Latihan Gerakan - SignLearn AI</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <h1>🤟 SignLearn AI</h1>
+          <p>Belajar Bahasa Isyarat Indonesia dengan AI</p>
+        </div>
+        <ul class="navbar-menu">
+          <li><a href="index.html">Dashboard</a></li>
+          <li><a href="learn.html">Pelajari</a></li>
+          <li><a href="practice.html" class="active">Latihan</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <section class="practice">
+        <div class="practice-header">
+          <h2>Latihan Gerakan BISINDO</h2>
+          <p>Tunjukkan gerakan Anda dan AI akan mengevaluasi akurasi Anda</p>
+        </div>
+
+        <div class="practice-container">
+          <!-- Main Practice Area -->
+          <div class="practice-main">
+            <div id="startScreen" class="screen active">
+              <h3>Siap untuk Latihan?</h3>
+              <p>
+                Pastikan kamera Anda aktif dan kondisi pencahayaan cukup baik.
+              </p>
+              <button
+                onclick="startPractice()"
+                class="btn btn-primary btn-large"
+              >
+                Mulai Latihan
+              </button>
+            </div>
+
+            <div id="practiceScreen" class="screen">
+              <div class="gesture-challenge">
+                <div class="target-gesture">
+                  <h3>Tunjukkan Gerakan:</h3>
+                  <div class="gesture-display">
+                    <img id="targetGestureImage" src="" alt="Target Gesture" />
+                    <p id="targetGestureName"></p>
+                  </div>
+                </div>
+
+                <div class="camera-section">
+                  <video
+                    id="cameraFeed"
+                    width="320"
+                    height="240"
+                    autoplay
+                  ></video>
+                  <div class="camera-controls">
+                    <button onclick="captureFrame()" class="btn btn-success">
+                      Capture
+                    </button>
+                    <button onclick="stopPractice()" class="btn btn-danger">
+                      Berhenti
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="resultScreen" class="screen">
+              <div class="result-display">
+                <h3 id="resultTitle"></h3>
+                <div class="accuracy-display">
+                  <div class="accuracy-circle">
+                    <span id="accuracyValue">0</span>%
+                  </div>
+                </div>
+                <p id="resultMessage"></p>
+                <div class="result-details" id="resultDetails"></div>
+                <div class="result-actions">
+                  <button onclick="nextPractice()" class="btn btn-primary">
+                    Gerakan Berikutnya
+                  </button>
+                  <button onclick="backToDashboard()" class="btn btn-secondary">
+                    Kembali ke Dashboard
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Sidebar -->
+          <div class="practice-sidebar">
+            <div class="session-stats">
+              <h3>Statistik Sesi</h3>
+              <div class="stat">
+                <span>Gerakan</span>
+                <strong id="sessionCount">0</strong>
+              </div>
+              <div class="stat">
+                <span>Rata-rata Akurasi</span>
+                <strong id="sessionAverage">0%</strong>
+              </div>
+              <div class="stat">
+                <span>Benar</span>
+                <strong id="sessionCorrect">0</strong>
+              </div>
+            </div>
+
+            <div class="gesture-queue">
+              <h3>Daftar Gerakan</h3>
+              <ul id="gestureQueue"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <p>
+        &copy; 2024 SignLearn AI - Platform Pembelajaran BISINDO. Semua hak
+        dilindungi.
+      </p>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/practice.js"></script>
+  </body>
+</html>

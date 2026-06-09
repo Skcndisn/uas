@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pelajari Gerakan - SignLearn AI</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <h1>🤟 SignLearn AI</h1>
+          <p>Belajar Bahasa Isyarat Indonesia dengan AI</p>
+        </div>
+        <ul class="navbar-menu">
+          <li><a href="index.html">Dashboard</a></li>
+          <li><a href="learn.html" class="active">Pelajari</a></li>
+          <li><a href="practice.html">Latihan</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <section class="learn">
+        <div class="learn-header">
+          <h2>Pelajari Gerakan BISINDO</h2>
+          <p>Pelajari gerakan-gerakan dasar Bahasa Isyarat Indonesia</p>
+        </div>
+
+        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="Cari gerakan..." />
+          <button onclick="filterGestures()">Cari</button>
+        </div>
+
+        <div class="gestures-grid" id="gesturesGrid">
+          <!-- Gestures will be loaded here by JavaScript -->
+        </div>
+
+        <!-- Gesture Detail Modal -->
+        <div id="gestureModal" class="modal">
+          <div class="modal-content">
+            <span class="close" onclick="closeGestureModal()">&times;</span>
+            <div class="gesture-detail">
+              <div class="gesture-image-container">
+                <img id="gestureImage" src="" alt="Gesture" />
+              </div>
+              <div class="gesture-info">
+                <h2 id="gestureName"></h2>
+                <p id="gestureDescription"></p>
+                <div class="gesture-tips">
+                  <h3>Tips Pembelajaran:</h3>
+                  <ul id="gestureTips">
+                    <li>Amati gerakan dengan seksama</li>
+                    <li>Ulang gerakan beberapa kali</li>
+                    <li>Lihat video demonstrasi jika tersedia</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <p>
+        &copy; 2024 SignLearn AI - Platform Pembelajaran BISINDO. Semua hak
+        dilindungi.
+      </p>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/learn.js"></script>
+  </body>
+</html>
