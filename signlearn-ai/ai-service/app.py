@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 try:
     import cv2
+    _ = cv2.cvtColor  # verify it actually loaded
     HAS_CV2 = True
 except Exception:
     HAS_CV2 = False
@@ -78,10 +79,10 @@ def predict():
         
         return jsonify({
             'success': True,
-            'gesture': result['gesture'],
-            'gesture_id': result.get('gesture_id'),
-            'confidence': result['confidence'],
-            'accuracy': result['accuracy']
+            'gesture': str(result['gesture']) if result.get('gesture') is not None else None,
+            'gesture_id': int(result['gesture_id']) if result.get('gesture_id') is not None else None,
+            'confidence': float(result['confidence']),
+            'accuracy': float(result['accuracy'])
         }), 200
     
     except Exception as e:

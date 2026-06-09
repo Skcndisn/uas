@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kuis - SignLearn AI</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <h1>🤟 SignLearn AI</h1>
+          <p>Belajar Bahasa Isyarat Indonesia dengan AI</p>
+        </div>
+        <ul class="navbar-menu">
+          <li><a href="index.html">Dashboard</a></li>
+          <li><a href="learn.html">Pelajari</a></li>
+          <li><a href="practice.html">Latihan</a></li>
+          <li><a href="quiz.html" class="active">Kuis</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <section class="quiz-section">
+        <div class="quiz-header">
+          <h2>🎯 Kuis Tebak Huruf BISINDO</h2>
+          <p>Lihat gambar huruf dan tebak urutan hurufnya!</p>
+        </div>
+
+        <div class="quiz-card">
+          <div class="quiz-instruction">
+            <span class="instruction-icon">📋</span>
+            <strong>Instruksi:</strong> Lihat 4 gambar huruf di bawah, lalu ketik urutan hurufnya sesuai nomor!
+          </div>
+
+          <div class="quiz-images-grid" id="quizImagesGrid">
+          </div>
+
+          <div class="quiz-answer-section">
+            <label class="quiz-answer-label">Jawab di sini:</label>
+            <div class="quiz-input-wrapper">
+              <input
+                type="text"
+                id="quizAnswer"
+                class="quiz-input"
+                maxlength="4"
+                placeholder="____"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="characters"
+              />
+            </div>
+            <div class="quiz-keyboard" id="quizKeyboard"></div>
+          </div>
+
+          <div id="quizResult" class="quiz-result" style="display:none;"></div>
+
+          <div class="quiz-actions">
+            <button onclick="checkAnswer()" class="btn btn-primary btn-large" id="btnCheck">
+              Periksa Jawaban
+            </button>
+            <button onclick="nextQuiz()" class="btn btn-secondary btn-large" id="btnNext" style="display:none;">
+              Soal Berikutnya
+            </button>
+          </div>
+
+          <div class="quiz-score-bar">
+            <div class="quiz-score-item">
+              <span class="score-label">Benar</span>
+              <span class="score-value score-correct" id="scoreCorrect">0</span>
+            </div>
+            <div class="quiz-score-item">
+              <span class="score-label">Salah</span>
+              <span class="score-value score-wrong" id="scoreWrong">0</span>
+            </div>
+            <div class="quiz-score-item">
+              <span class="score-label">Total</span>
+              <span class="score-value" id="scoreTotal">0</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <p>
+        &copy; 2024 SignLearn AI - Platform Pembelajaran BISINDO. Semua hak
+        dilindungi.
+      </p>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/quiz.js"></script>
+  </body>
+</html>

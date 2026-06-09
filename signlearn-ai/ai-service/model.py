@@ -1,5 +1,6 @@
 try:
     import cv2
+    _ = cv2.cvtColor  # verify it actually loaded
     HAS_CV2 = True
 except Exception:
     HAS_CV2 = False
