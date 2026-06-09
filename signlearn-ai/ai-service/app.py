@@ -1,6 +1,10 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-import cv2
+try:
+    import cv2
+    HAS_CV2 = True
+except Exception:
+    HAS_CV2 = False
 import numpy as np
 from io import BytesIO
 from PIL import Image
@@ -56,8 +60,10 @@ def predict():
         
         # Read image
         image_data = file.read()
-        image = Image.open(BytesIO(image_data))
-        image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+        image = Image.open(BytesIO(image_data)).convert('RGB')
+        image = np.array(image)
+        if HAS_CV2:
+            image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
         
         # Make prediction
         result = model.predict(image)
@@ -112,8 +118,10 @@ def train_model():
         for file, label in zip(files, labels):
             try:
                 image_data = file.read()
-                image = Image.open(BytesIO(image_data))
-                image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+                image = Image.open(BytesIO(image_data)).convert('RGB')
+                image = np.array(image)
+                if HAS_CV2:
+                    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
                 training_data.append(image)
                 training_labels.append(label.strip())
             except Exception as e:

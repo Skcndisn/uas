@@ -1,4 +1,8 @@
-import cv2
+try:
+    import cv2
+    HAS_CV2 = True
+except Exception:
+    HAS_CV2 = False
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
@@ -9,7 +13,7 @@ from datetime import datetime
 try:
     import mediapipe as mp
     HAS_MEDIAPIPE = True
-except ImportError:
+except Exception:
     HAS_MEDIAPIPE = False
 
 class GestureRecognitionModel:
@@ -55,7 +59,7 @@ class GestureRecognitionModel:
                 np.random.seed(feature_seed)
                 return np.random.randn(1, 126)  # 126 features (2 hands * 63)
             
-            image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) if HAS_CV2 else image
             results = self.hands.process(image_rgb)
             
             if results.multi_hand_landmarks:
@@ -143,7 +147,12 @@ class GestureRecognitionModel:
         """
         try:
             if isinstance(image, str):
-                image = cv2.imread(image)
+                if HAS_CV2:
+                    image = cv2.imread(image)
+                else:
+                    from PIL import Image as PILImage
+                    import numpy as np
+                    image = np.array(PILImage.open(image).convert('RGB'))
                 if image is None:
                     return {'error': 'Cannot read image', 'gesture': None, 'confidence': 0}
             

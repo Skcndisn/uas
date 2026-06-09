@@ -59,6 +59,20 @@ def create_app(config_class=DevelopmentConfig):
         except Exception as e:
             return {'success': False, 'error': f'AI service unavailable: {str(e)}'}, 503
     
+    # Serve gesture images from the BISINDO dataset
+    DATASET_DIR = os.path.join(os.path.dirname(__file__), 'database', 'Citra BISINDO')
+
+    @app.route('/<letter>.jpg')
+    def serve_gesture_image(letter):
+        letter_upper = letter.upper()
+        letter_dir = os.path.join(DATASET_DIR, letter_upper)
+        if os.path.isdir(letter_dir):
+            for fname in sorted(os.listdir(letter_dir)):
+                if fname.lower().endswith('.jpg'):
+                    return send_from_directory(letter_dir, fname)
+        from flask import abort
+        abort(404)
+
     # Serve frontend static files
     @app.route('/', defaults={'path': ''})
     @app.route('/<path:path>')
