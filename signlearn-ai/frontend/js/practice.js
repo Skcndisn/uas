@@ -116,7 +116,7 @@ async function captureFrame() {
         const formData = new FormData();
         formData.append("image", blob);
 
-        const response = await fetch(`${AI_SERVICE_URL}/predict`, {
+        const response = await fetch(`/ai/predict`, {
           method: "POST",
           body: formData,
         });

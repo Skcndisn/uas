@@ -1,6 +1,6 @@
 // Configuration
-const API_BASE_URL = "http://localhost:5000/api";
-const AI_SERVICE_URL = "http://localhost:5001";
+const API_BASE_URL = "/api";
+const AI_SERVICE_URL = "";
 
 // Get or create user ID (stored in localStorage)
 function getUserId() {
